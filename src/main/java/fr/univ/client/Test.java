@@ -1,15 +1,10 @@
 package fr.univ.client;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.awt.geom.*;
 import java.awt.Color;
 import java.util.*;
 
-import fr.univ.factory.HandShapeFactory;
 import fr.univ.factory.ShapeFactory;
 import fr.univ.factory.StandardShapeFactory;
 import fr.univ.shapes.*;
-import fr.univ.viewer.GraphicViewer;
 
 public class Test {
 	

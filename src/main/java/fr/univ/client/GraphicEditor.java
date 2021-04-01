@@ -1,4 +1,4 @@
-package fr.univ.viewer;
+package fr.univ.client;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import fr.univ.shapes.Drawable;
 
-public class GraphicViewer extends JFrame {
+public class GraphicEditor extends JPanel {
 	
 	private static final long serialVersionUID = -3354282073194736248L;
 	private final int width = 800;
@@ -14,24 +14,14 @@ public class GraphicViewer extends JFrame {
 	private Graphics2D onscreen;
 
 	
-	public GraphicViewer() {
+	public GraphicEditor() {
 		setVisible(true);
 		setSize(width, height);
-		setTitle("Afficheur de dessin");
 
 		BufferedImage onscreenImage  = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		ImageIcon icon = new ImageIcon(onscreenImage);
 		JLabel draw = new JLabel(icon);
-
-		getContentPane().add(draw);
 		onscreen  = onscreenImage.createGraphics();
-		
-		// Closing any view will quit :
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
 	}
 	
 	
