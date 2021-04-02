@@ -12,12 +12,14 @@ public class WindowEditor extends JFrame {
 
     public WindowEditor() {
         setVisible(true);
-        setSize(width, height);
         setTitle("Afficheur de dessin");
 
         this.graphicEditor = new GraphicEditor();
         this.setJMenuBar(new MenuBar());
         getContentPane().add(this.graphicEditor);
+        this.pack();
+        setSize(width,height);
+        setVisible(true);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);

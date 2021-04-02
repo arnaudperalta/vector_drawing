@@ -5,17 +5,19 @@ import javax.swing.*;
 public class MenuBar extends JMenuBar {
 
     public MenuBar() {
-        JMenuItem itemNew = new JMenuItem( "New" );
+        super();
+
+        JButton itemNew = new JButton( "New" );
         this.add(itemNew);
 
-        /*JMenuItem itemOpen = new JMenuItem( "Open" );
+        JButton itemOpen = new JButton( "Open" );
         this.add(itemOpen);
 
-        JMenuItem itemSave = new JMenuItem( "Save" );
+        JButton itemSave = new JButton( "Save" );
         this.add(itemSave);
 
-        JMenuItem itemSaveAs = new JMenuItem( "Save as" );
-        this.add(itemSaveAs);*/
+        JButton itemSaveAs = new JButton( "Save as" );
+        this.add(itemSaveAs);
 
     }
 
