@@ -10,22 +10,22 @@ public class HandCircle implements ICircle {
 
 	private double cx, cy, rad;
 	private Color c;
-	
+
 	public HandCircle(double cx, double cy, double rad, Color c) {
 		this.cx = cx;
 		this.cy = cy;
 		this.rad = rad;
 		this.c = c;
 	}
-	
-	
+
+
 	@Override
 	public void draw(Graphics2D screen) {
 		screen.setColor(c);
 		screen.draw(new Ellipse2D.Double(
-				cx - rad, 
-				cy - rad, 
-				rad * 2 + Noise.getNoise(rad), 
+				cx - rad,
+				cy - rad,
+				rad * 2 + Noise.getNoise(rad),
 				rad * 2 + Noise.getNoise(rad)
 		));
 	}
@@ -35,10 +35,15 @@ public class HandCircle implements ICircle {
 		return rad;
 	}
 
+	public double[] getMiddle() {
+		double[] res = {cx, cy};
+		return res;
+	}
+
 	@Override
 	public void move(int dx, int dy) {
 		this.cx += dx;
 		this.cy += dy;
 	}
-	
+
 }

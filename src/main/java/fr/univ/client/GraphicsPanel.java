@@ -3,18 +3,19 @@ import java.awt.*;
 import javax.swing.JPanel;
 import java.util.List;
 import fr.univ.shapes.Drawable;
+import fr.univ.shapes.Graphics;
 
 public class GraphicsPanel extends JPanel {
 
-  private List<Drawable> shapes;
+  private List<Graphics> shapes;
 
-  public GraphicsPanel(List<Drawable> shapes) {
+  public GraphicsPanel(List<Graphics> shapes) {
     super();
     this.shapes = shapes;
   }
 
   @Override
-  protected void paintComponent(Graphics g) {
+  protected void paintComponent(java.awt.Graphics g) {
 		super.paintComponent(g);
 		for (Drawable shape : this.shapes) {
 			shape.draw((Graphics2D) g);

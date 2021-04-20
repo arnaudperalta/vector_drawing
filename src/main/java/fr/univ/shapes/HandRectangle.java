@@ -8,7 +8,7 @@ public class HandRectangle implements IRectangle {
 	private double x0, y0, x1, y1;
 	private ILine l1, l2, l3, l4;
 	private Color c;
-	
+
 	public HandRectangle(double x0, double y0, double x1, double y1, Color c) {
 		this.x0 = x0;
 		this.y0 = y0;
@@ -20,7 +20,7 @@ public class HandRectangle implements IRectangle {
 		l3 = new HandLine(this.x1, this.y0, this.x1, this.y1, c);
 		l4 = new HandLine(this.x0, this.y1, this.x1, this.y1, c);
 	}
-	
+
 	@Override
 	public void draw(Graphics2D screen) {
 		screen.setColor(c);
@@ -38,6 +38,11 @@ public class HandRectangle implements IRectangle {
 	@Override
 	public double getHeight() {
 		return Math.abs(y1 - y0);
+	}
+
+	public double[] getMiddle() {
+		double[] res = { (x0 + x1)/2 , (y0 + y1) / 2 };
+		return res;
 	}
 
 	@Override

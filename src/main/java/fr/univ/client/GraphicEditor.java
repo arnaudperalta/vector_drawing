@@ -1,18 +1,16 @@
 package fr.univ.client;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.*;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univ.shapes.Circle;
-import fr.univ.shapes.Drawable;
-import fr.univ.shapes.Line;
-import fr.univ.shapes.Rectangle;
+import fr.univ.factory.ShapeFactory;
+import fr.univ.factory.StandardShapeFactory;
+import fr.univ.shapes.Graphics;
+import fr.univ.shapes.SubPicture;
 
 public class GraphicEditor extends JPanel {
 
@@ -23,39 +21,75 @@ public class GraphicEditor extends JPanel {
 	private JButton circleButton;
 	private JButton lineButton;
 	private JButton rectangleButton;
+	private JButton moveShapeButton;
+	private JButton deleteShapeButton;
+	private JButton groupShapeButton;
+	private JButton ungroupShapeButton;
 
-	private List<Drawable> shapes;
+	private GraphicsPanel gp;
 
-	private double x;
-	private double y;
+	private List<Graphics> shapes;
+	private ShapeFactory hsf;
+
+	private int x;
+	private int y;
 
 	private boolean secondInput;
-	private int shapeSelected;
+	private Shape shapeType;
+
+	private Graphics selectedShape;
+
+	private AppMode mode;
 
 	public GraphicEditor() {
+		createModel();
+		createView();
+		setUpLayout();
+		createController();
+	}
+
+	private void createModel() {
+		this.shapes = new ArrayList<Graphics>();
+		shapeType = Shape.CIRCLE;
+		mode = AppMode.ADD_SHAPE;
+		hsf = new StandardShapeFactory();
+	}
+
+	private void createView() {
 		setVisible(true);
 		setSize(width, height);
-		this.shapes = new ArrayList<Drawable>();
-		BufferedImage onscreenImage  = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		ImageIcon icon = new ImageIcon(onscreenImage);
-		JLabel draw = new JLabel(icon);
-		JMenuBar test = new JMenuBar();
 		circleButton = new JButton("Circle");
 		lineButton = new JButton("Line");
 		rectangleButton = new JButton("Rectangle");
+		moveShapeButton = new JButton("Move Shape");
+		deleteShapeButton = new JButton("Delete Shape");
+		groupShapeButton = new JButton("Group Shape");
+		ungroupShapeButton = new JButton("Ungroup Shape");
+		gp = new GraphicsPanel(this.shapes);
+	}
+
+	private void setUpLayout() {
+		JMenuBar test = new JMenuBar();
 		test.add(circleButton);
 		test.add(lineButton);
 		test.add(rectangleButton);
+		test.add(moveShapeButton);
+		test.add(deleteShapeButton);
+		test.add(groupShapeButton);
+		test.add(ungroupShapeButton);
 		this.setLayout(new BorderLayout());
 		this.add(test, BorderLayout.PAGE_START);
-		GraphicsPanel gp = new GraphicsPanel(this.shapes);
 		this.add(gp, BorderLayout.CENTER);
-		shapeSelected = 0;
+	}
+
+	private void createController() {
 		circleButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				shapeSelected = 0;
+				mode = AppMode.ADD_SHAPE;
+				shapeType = Shape.CIRCLE;
+				secondInput = false;
 			}
 
 		});
@@ -63,7 +97,9 @@ public class GraphicEditor extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				shapeSelected = 1;
+				mode = AppMode.ADD_SHAPE;
+				shapeType = Shape.LINE;
+				secondInput = false;
 			}
 
 		});
@@ -71,41 +107,186 @@ public class GraphicEditor extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				shapeSelected = 2;
+				mode = AppMode.ADD_SHAPE;
+				shapeType = Shape.RECTANGLE;
+				secondInput = false;
+			}
+
+		});
+
+		moveShapeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mode = AppMode.MOVE_SHAPE;
+				secondInput = false;
+			}
+
+		});
+
+		deleteShapeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mode = AppMode.DELETE_SHAPE;
+				secondInput = false;
+			}
+
+		});
+		groupShapeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mode = AppMode.GROUP_SHAPE;
+				secondInput = false;
+			}
+
+		});
+
+		ungroupShapeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mode = AppMode.UNGROUP_SHAPE;
+				secondInput = false;
 			}
 
 		});
 		gp.addMouseListener(new MouseInputAdapter(){
-
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				if(secondInput) {
-					switch(shapeSelected) {
-						case 0:
-							double dis=Math.sqrt((e.getX()-x)*(e.getX()-x) + (e.getY()-y)*(e.getY()-y));
-							shapes.add(new Circle(x, y, dis, Color.RED));
+				switch(mode) {
+					case ADD_SHAPE:
+					if(secondInput) {
+						switch(shapeType) {
+							case CIRCLE:
+								double dis=Math.sqrt((e.getX()-x)*(e.getX()-x) + (e.getY()-y)*(e.getY()-y));
+								shapes.add(hsf.createICircle(x, y, dis, Color.RED));
+								break;
+							case LINE:
+								shapes.add(hsf.createILine(x, y, e.getX(), e.getY(), Color.RED));
+								break;
+							case RECTANGLE:
+								shapes.add(hsf.createIRectangle(x, y, e.getX(), e.getY(), Color.RED));
+								break;
+							default:
 							break;
-						case 1:
-							shapes.add(new Line(x, y, e.getX(), e.getY(), Color.RED));
-							break;
-						case 2:
-							shapes.add(new Rectangle(x, y, e.getX(), e.getY(), Color.RED));
-							break;
-						default:
-						 break;
+						}
+						secondInput = false;
 					}
-					secondInput = false;
-				}
-				else  {
-					x = e.getX();
-					y = e.getY();
-					secondInput = true;
+					else  {
+						x = e.getX();
+						y = e.getY();
+						secondInput = true;
+					}
+					break;
+					case MOVE_SHAPE:
+					if(secondInput) {
+					  int dx = e.getX() - (int) selectedShape.getMiddle()[0];
+						int dy = e.getY() - (int) selectedShape.getMiddle()[1];
+						selectedShape.move(dx,dy);
+						secondInput = false;
+					}
+					else {
+						double minDis = Double.POSITIVE_INFINITY;
+						Graphics resShape = null;
+						for( Graphics shape : shapes) {
+							double[] mid = shape.getMiddle();
+							double dis =Math.sqrt((e.getX()-mid[0])*(e.getX()-mid[0]) + (e.getY()-mid[1])*(e.getY()-mid[1]));
+							if(dis < minDis) {
+								resShape = shape;
+								minDis = dis;
+							}
+						}
+						selectedShape = resShape;
+						secondInput = true;
+					}
+					break;
+					case DELETE_SHAPE:
+					double minDis = Double.POSITIVE_INFINITY;
+					Graphics resShape = null;
+					for( Graphics shape : shapes) {
+						double[] mid = shape.getMiddle();
+						double dis =Math.sqrt((e.getX()-mid[0])*(e.getX()-mid[0]) + (e.getY()-mid[1])*(e.getY()-mid[1]));
+						if(dis < minDis) {
+							resShape = shape;
+							minDis = dis;
+						}
+					}
+					shapes.remove(resShape);
+					break;
+					case GROUP_SHAPE:
+					if(secondInput) {
+						SubPicture sp = new SubPicture();
+						for( Graphics shape : shapes) {
+							double sx = shape.getMiddle()[0];
+							double sy = shape.getMiddle()[1];
+							if(((sx > x && sx < e.getX()) || (sx < x && sx > e.getX())) &&
+							((sy > y && sy < e.getY()) || (sy < y && sy > e.getY()))) {
+								sp.addGraphic(shape);
+							}
+						}
+						shapes.add(sp);
+						for(Graphics shape : sp.getShapes()) {
+							shapes.remove(shape);
+						}
+						secondInput = false;
+					}
+					else {
+						x = e.getX();
+						y = e.getY();
+						secondInput = true;
+					}
+					break;
+					case UNGROUP_SHAPE:
+					double minSpDis = Double.POSITIVE_INFINITY;
+					Graphics resSp = null;
+					for( Graphics shape : shapes) {
+						double[] mid = shape.getMiddle();
+						double dis =Math.sqrt((e.getX()-mid[0])*(e.getX()-mid[0]) + (e.getY()-mid[1])*(e.getY()-mid[1]));
+						if(dis < minSpDis && shape instanceof SubPicture) {
+							resSp = shape;
+							minSpDis = dis;
+						}
+					}
+					if(resSp !=null) {
+						SubPicture sp = (SubPicture) resSp;
+						for( Graphics g: sp.getShapes()) {
+							shapes.add(g);
+						}
+						shapes.remove(sp);
+					}
+					break;
+					case MIRROR_SHAPE:
+					minDis = Double.POSITIVE_INFINITY;
+					resShape = null;
+					for( Graphics shape : shapes) {
+						double[] mid = shape.getMiddle();
+						double dis =Math.sqrt((e.getX()-mid[0])*(e.getX()-mid[0]) + (e.getY()-mid[1])*(e.getY()-mid[1]));
+						if(dis < minDis ) {
+							resSp = shape;
+							minDis = dis;
+						}
+					}
+					break;
 				}
 			}
-
-
 		});
+	}
+
+	private enum AppMode {
+		ADD_SHAPE,
+		MOVE_SHAPE,
+		DELETE_SHAPE,
+		GROUP_SHAPE,
+		UNGROUP_SHAPE,
+		MIRROR_SHAPE
+	}
+
+	private enum Shape {
+		CIRCLE,
+		LINE,
+		RECTANGLE
 	}
 
 }

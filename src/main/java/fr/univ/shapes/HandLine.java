@@ -7,7 +7,7 @@ import java.awt.geom.QuadCurve2D;
 import fr.univ.noise.Noise;
 
 public class HandLine implements ILine {
-	
+
 	private double x0, y0, x1, y1, ctrlx, ctrly;
 	private Color c;
 
@@ -20,7 +20,7 @@ public class HandLine implements ILine {
 		this.ctrly = (y0 + y1) / 2 + Noise.getNoise(this.getLength());
 		this.c = c;
 	}
-	
+
 	@Override
 	public void draw(Graphics2D screen) {
 		screen.setColor(c);
@@ -34,6 +34,11 @@ public class HandLine implements ILine {
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
+	public double[] getMiddle() {
+		double[] res = { (x0 + x1)/2 , (y0 + y1) / 2 };
+		return res;
+	}
+
 	@Override
 	public void move(int dx, int dy) {
 		this.x0 += dx;
@@ -41,5 +46,5 @@ public class HandLine implements ILine {
 		this.y0 += dy;
 		this.y1 += dy;
 	}
-	
+
 }
