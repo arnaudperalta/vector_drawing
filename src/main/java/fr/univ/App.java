@@ -1,15 +1,17 @@
 package fr.univ;
 
-
 import fr.univ.client.WindowEditor;
-import fr.univ.shapes.Drawable;
-import fr.univ.client.GraphicEditor;
-
-import static fr.univ.client.Test.*;
 
 public class App
 {
     public static void main(String[] args) {
-        WindowEditor we = new WindowEditor();
+		if (args.length == 0)
+        	new WindowEditor();
+		else if (args[0].equals("mirroir"))
+			System.out.println("mirroir");
+		else if (args[0].equals("standard"))
+			System.out.println("standard");
+		else if (args[0].equals("surface"))
+			System.out.println("surface");
     }
 }
