@@ -274,7 +274,7 @@ public class GraphicEditor extends JPanel {
 		});
 	}
 
-	private void saveDrawing() {
+	public void saveDrawing() {
 		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			+ "<drawing xmlns=\"http://www.univ-rouen.fr/drawing\">";
 		for (Graphics g : shapes) {
