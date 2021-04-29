@@ -13,11 +13,12 @@ public class WindowEditor extends JFrame {
     private GraphicEditor graphicEditor;
     private final int width = 1366;
     private final int height = 768;
+    private String path;
 
     public WindowEditor() {
         setVisible(true);
         setTitle("Afficheur de dessin");
-
+        path = null;
         this.graphicEditor = new GraphicEditor();
         JMenuBar menu = new JMenuBar();
         JButton itemNew = new JButton( "New" );
@@ -59,6 +60,14 @@ public class WindowEditor extends JFrame {
                 e1.printStackTrace();
             }
         });
+        itemSave.addActionListener(actionListener -> {
+            try {
+                save();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
         this.pack();
         setSize(width,height);
         setResizable(false);
@@ -73,11 +82,14 @@ public class WindowEditor extends JFrame {
 	public void openSaveAs() throws IOException {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("."));
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-			System.out.println(chooser.getCurrentDirectory());
-			graphicEditor.saveDrawing(chooser.getCurrentDirectory().getAbsolutePath());
+		if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			graphicEditor.saveDrawing(chooser.getSelectedFile().getAbsolutePath());
 		}
+        path = chooser.getSelectedFile().getAbsolutePath();
+	}
+
+    public void save() throws IOException {
+		graphicEditor.saveDrawing(path);
 	}
 
 	public void openDrawing() throws IOException {
@@ -88,5 +100,6 @@ public class WindowEditor extends JFrame {
 			System.out.println(chooser.getSelectedFile().getAbsolutePath());
 			graphicEditor.openDrawing(chooser.getSelectedFile().getAbsolutePath());
 		}
+        path = chooser.getSelectedFile().getAbsolutePath();
 	}
 }
