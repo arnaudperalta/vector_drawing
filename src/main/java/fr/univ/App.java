@@ -3,15 +3,19 @@ package fr.univ;
 import java.io.IOException;
 
 import fr.univ.client.GraphicEditor;
+import fr.univ.client.MirrorOperation;
 import fr.univ.client.WindowEditor;
 
 public class App
 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 		if (args.length == 0)
         	new WindowEditor();
-		else if (args[0].equals("mirroir"))
-			System.out.println("mirroir");
+		else if (args[0].equals("mirroir")) {
+			if (args.length < 3)
+				throw new Exception("Missing arguments");
+			MirrorOperation.mirrorDrawingFromFile(args[1], args[2]);
+		}
 		else if (args[0].equals("standard"))
 			System.out.println("standard");
 		else if (args[0].equals("surface"))

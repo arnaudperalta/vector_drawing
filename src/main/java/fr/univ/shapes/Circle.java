@@ -57,4 +57,17 @@ public class Circle implements ICircle {
 				+ "<radius>" + this.rad + "</radius>"
 			+ "</circle>";
 	}
+
+	@Override
+	public double getMostSouthPoint() {
+		return cy + rad;
+	}
+
+	@Override
+	public void mirror(double symetryPoint) {
+		if (cy <= symetryPoint)
+			cy += symetryPoint;
+		else
+			cy -= symetryPoint;
+	}
 }

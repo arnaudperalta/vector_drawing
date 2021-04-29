@@ -67,4 +67,18 @@ public class HandCircle implements ICircle {
 			+ "</circle>";
 	}
 
+
+	@Override
+	public double getMostSouthPoint() {
+		return cy + rad;
+	}
+
+	@Override
+	public void mirror(double symetryPoint) {
+		if (cy <= symetryPoint)
+			cy += symetryPoint;
+		else
+			cy -= symetryPoint;
+	}
+
 }

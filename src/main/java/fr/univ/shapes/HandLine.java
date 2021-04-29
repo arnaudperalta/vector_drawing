@@ -67,4 +67,21 @@ public class HandLine implements ILine {
 			+ "</line>";
 	}
 
+	@Override
+	public double getMostSouthPoint() {
+		return Math.max(y0, y1);
+	}
+
+	@Override
+	public void mirror(double symetryPoint) {
+		if (y0 <= symetryPoint)
+			y0 += symetryPoint;
+		else
+			y0 -= symetryPoint;
+		if (y1 <= symetryPoint)
+			y1 += symetryPoint;
+		else
+			y1 -= symetryPoint;
+	}
+
 }
