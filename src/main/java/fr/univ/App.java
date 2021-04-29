@@ -1,7 +1,6 @@
 package fr.univ;
 
-import java.io.IOException;
-
+import fr.univ.client.AreaOperation;
 import fr.univ.client.GraphicEditor;
 import fr.univ.client.MirrorOperation;
 import fr.univ.client.WindowEditor;
@@ -16,11 +15,16 @@ public class App
 				throw new Exception("Missing arguments");
 			MirrorOperation.mirrorDrawingFromFile(args[1], args[2]);
 		}
-		else if (args[0].equals("standard"))
+		else if (args[0].equals("standard")) {
 			System.out.println("standard");
-		else if (args[0].equals("surface"))
-			System.out.println("surface");
-		else if (args[0].equals("debug"))
+		}
+		else if (args[0].equals("surface")) {
+			if (args.length < 2)
+				throw new Exception("Missing arguments");
+			AreaOperation.getAreasOfDrawingFromFile(args[1]);
+		}
+		else if (args[0].equals("debug")) {
 			new GraphicEditor().openDrawing("drawing.xml");
+		}
 	}
 }

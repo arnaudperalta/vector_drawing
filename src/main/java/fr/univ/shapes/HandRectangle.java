@@ -89,4 +89,9 @@ public class HandRectangle implements IRectangle {
 		else
 			y1 -= symetryPoint;
 	}
+
+	@Override
+	public double getArea() {
+		return getHeight() * getWidth();
+	}
 }

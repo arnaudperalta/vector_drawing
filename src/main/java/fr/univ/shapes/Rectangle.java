@@ -73,6 +73,11 @@ public class Rectangle implements IRectangle {
 			y1 -= symetryPoint;
 	}
 
+	@Override
+	public double getArea() {
+		return getWidth() * getHeight();
+	}
+
 }
 
 

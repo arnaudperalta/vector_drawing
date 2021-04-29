@@ -70,4 +70,9 @@ public class Circle implements ICircle {
 		else
 			cy -= symetryPoint;
 	}
+
+	@Override
+	public double getArea() {
+		return Math.PI * rad * rad;
+	}
 }

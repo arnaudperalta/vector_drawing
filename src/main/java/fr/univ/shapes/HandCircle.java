@@ -81,4 +81,10 @@ public class HandCircle implements ICircle {
 			cy -= symetryPoint;
 	}
 
+
+	@Override
+	public double getArea() {
+		return Math.PI * rad * rad;
+	}
+
 }

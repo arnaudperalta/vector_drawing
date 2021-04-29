@@ -84,4 +84,9 @@ public class HandLine implements ILine {
 			y1 -= symetryPoint;
 	}
 
+	@Override
+	public double getArea() {
+		return 0;
+	}
+
 }

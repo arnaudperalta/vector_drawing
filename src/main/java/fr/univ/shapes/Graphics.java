@@ -7,4 +7,6 @@ public interface Graphics extends Drawable {
 	public double getMostSouthPoint();
 
 	public void mirror(double symetryPoint);
+
+	public double getArea();
 }
