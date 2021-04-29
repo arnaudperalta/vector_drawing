@@ -11,6 +11,7 @@ import javax.swing.event.MouseInputAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univ.factory.HandShapeFactory;
 import fr.univ.factory.ShapeFactory;
 import fr.univ.factory.StandardShapeFactory;
 import fr.univ.shapes.Graphics;
@@ -29,6 +30,7 @@ public class GraphicEditor extends JPanel {
 	private JButton deleteShapeButton;
 	private JButton groupShapeButton;
 	private JButton ungroupShapeButton;
+	private JButton drawModeSwitch;
 
 	private GraphicsPanel gp;
 
@@ -45,6 +47,8 @@ public class GraphicEditor extends JPanel {
 
 	private AppMode mode;
 
+	private DrawMode drawMode;
+
 	public GraphicEditor() {
 		createModel();
 		createView();
@@ -56,6 +60,7 @@ public class GraphicEditor extends JPanel {
 		this.shapes = new ArrayList<Graphics>();
 		shapeType = Shape.CIRCLE;
 		mode = AppMode.ADD_SHAPE;
+		drawMode = DrawMode.STANDARD;
 		hsf = new StandardShapeFactory();
 	}
 
@@ -69,6 +74,7 @@ public class GraphicEditor extends JPanel {
 		deleteShapeButton = new JButton("Delete Shape");
 		groupShapeButton = new JButton("Group Shape");
 		ungroupShapeButton = new JButton("Ungroup Shape");
+		drawModeSwitch = new JButton("Dessin standard");
 		gp = new GraphicsPanel(this.shapes);
 	}
 
@@ -81,6 +87,7 @@ public class GraphicEditor extends JPanel {
 		test.add(deleteShapeButton);
 		test.add(groupShapeButton);
 		test.add(ungroupShapeButton);
+		test.add(drawModeSwitch);
 		this.setLayout(new BorderLayout());
 		this.add(test, BorderLayout.PAGE_START);
 		this.add(gp, BorderLayout.CENTER);
@@ -276,6 +283,27 @@ public class GraphicEditor extends JPanel {
 				}
 			}
 		});
+
+		drawModeSwitch.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switch (drawMode) {
+					case STANDARD:
+						hsf = new HandShapeFactory();
+						drawMode = DrawMode.HAND;
+						drawModeSwitch.setText("Dessin a la main");
+						break;
+					case HAND:
+						hsf = new StandardShapeFactory();
+						drawMode = DrawMode.STANDARD;
+						drawModeSwitch.setText("Dessin standard");
+						break;
+				}
+
+			}
+
+		});
 	}
 
 	public void saveDrawing(String filePath) throws IOException {
@@ -288,6 +316,18 @@ public class GraphicEditor extends JPanel {
 	public void openDrawing(String filePath) throws IOException {
 		System.out.println(GraphicSerialization.deserialize(filePath));
 	}
+
+	public void newCanvas() {
+		String choice = JOptionPane.showInputDialog(
+				this,
+				"Taille du canvas",
+				"Nouveau fichier",
+				JOptionPane.QUESTION_MESSAGE);
+		shapes.clear();
+		String[] size = choice.split("x");
+		gp.setSize(new Dimension(Integer.parseInt(size[0]),Integer.parseInt(size[1])));
+	}
+
 
 	private enum AppMode {
 		ADD_SHAPE,
@@ -302,6 +342,11 @@ public class GraphicEditor extends JPanel {
 		CIRCLE,
 		LINE,
 		RECTANGLE
+	}
+
+	private enum DrawMode {
+		STANDARD,
+		HAND
 	}
 
 }

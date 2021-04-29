@@ -11,8 +11,8 @@ import java.io.IOException;
 public class WindowEditor extends JFrame {
 
     private GraphicEditor graphicEditor;
-    private final int width = 800;
-    private final int height = 600;
+    private final int width = 1366;
+    private final int height = 768;
 
     public WindowEditor() {
         setVisible(true);
@@ -34,16 +34,7 @@ public class WindowEditor extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object[] options = {"test1", "test2"};
-                int choice = JOptionPane.showOptionDialog(
-                    null,
-                    "Taille du canvas",
-                    "Nouveau fichier",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options, options[0]);
-
+                graphicEditor.newCanvas();
             }
 
         });
@@ -58,6 +49,7 @@ public class WindowEditor extends JFrame {
 		itemOpen.addActionListener(actionListener -> openDrawing());
         this.pack();
         setSize(width,height);
+        setResizable(false);
         setVisible(true);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

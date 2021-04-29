@@ -8,7 +8,7 @@ import fr.univ.noise.Noise;
 
 public class HandCircle implements ICircle {
 
-	private double cx, cy, rad;
+	private double cx, cy, rad, xrad, yrad;
 	private Color c;
 
 	public HandCircle(double cx, double cy, double rad, Color c) {
@@ -16,6 +16,8 @@ public class HandCircle implements ICircle {
 		this.cy = cy;
 		this.rad = rad;
 		this.c = c;
+		this.xrad = Noise.getNoise(rad);
+		this.yrad = Noise.getNoise(rad);
 	}
 
 
@@ -25,8 +27,8 @@ public class HandCircle implements ICircle {
 		screen.draw(new Ellipse2D.Double(
 				cx - rad,
 				cy - rad,
-				rad * 2 + Noise.getNoise(rad),
-				rad * 2 + Noise.getNoise(rad)
+				rad * 2 + xrad,
+				rad * 2 + yrad
 		));
 	}
 
@@ -57,9 +59,9 @@ public class HandCircle implements ICircle {
 			colorStr = "blue";
 		if (c.equals(Color.BLACK))
 			colorStr = "black";
-		return 
+		return
 			"<circle color=\"" + colorStr + "\">"
-				+ "<point x=\"" + this.cx 
+				+ "<point x=\"" + this.cx
 						+ "\" y=\"" + this.cy + "\" />"
 				+ "<radius>" + this.rad + "</radius>"
 			+ "</circle>";
