@@ -5,14 +5,15 @@ import java.awt.geom.*;
 public class Circle implements ICircle {
 
 	private double cx, cy, rad;
-	private Color c;
+	private Color color;
 
-	public Circle(double cx, double cy, double rad, Color c) {
-		this.cx = cx; this.cy = cy; this.rad = rad;
-		this.c = c;
+	public Circle(double cx, double cy, double rad, Color color) {
+		this.cx = cx;
+		this.cy = cy;
+		this.rad = rad;
+		this.color = color;
 	}
 
-	// Méthodes propres à Circle :
 	public double getRadius() { return rad; }
 
 	public double[] getMiddle() {
@@ -20,15 +21,31 @@ public class Circle implements ICircle {
 		return res;
 	}
 
-	// Méthode de rendu :
 	public void draw(Graphics2D screen) {
-		screen.setColor(c);
-		screen.draw(new Ellipse2D.Double(cx-rad, cy-rad, rad*2, rad*2));
+		screen.setColor(color);
+		screen.draw(
+			new Ellipse2D.Double(
+				cx-rad,
+				cy-rad,
+				rad*2,
+				rad*2
+			)
+		);
 	}
 
 	@Override
 	public void move(int dx, int dy) {
 		this.cx += dx;
 		this.cy += dy;
+	}
+
+	@Override
+	public String serialize() {
+		return 
+			"<circle color=\"" + "\">"
+				+ "<point x=\"" + this.cx 
+						+ "\" y=\"" + this.cy + "\" /> + "
+				+ "<radius>" + this.rad + "</radius>"
+			+ "</circle>";
 	}
 }

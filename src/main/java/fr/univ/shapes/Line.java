@@ -37,5 +37,16 @@ public class Line implements ILine {
 		this.y0 += dy;
 		this.y1 += dy;
 	}
+
+	@Override
+	public String serialize() {
+		return 
+			"<line color=\"" + "\">"
+				+ "<point x=\"" + this.x0 
+						+ "\" y=\"" + this.y0 + "\" /> + "
+				+ "<point x=\"" + this.x1 
+						+ "\" y=\"" + this.y1 + "\" /> + "
+			+ "</line>";
+	}
 }
 

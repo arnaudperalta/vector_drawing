@@ -46,4 +46,14 @@ public class HandCircle implements ICircle {
 		this.cy += dy;
 	}
 
+	@Override
+	public String serialize() {
+		return 
+			"<circle color=\"" + "\">"
+				+ "<point x=\"" + this.cx 
+						+ "\" y=\"" + this.cy + "\" /> + "
+				+ "<radius>" + this.rad + "</radius>"
+			+ "</circle>";
+	}
+
 }
