@@ -41,10 +41,19 @@ public class Circle implements ICircle {
 
 	@Override
 	public String serialize() {
+		String colorStr = "";
+		if (color.equals(Color.RED))
+			colorStr = "red";
+		if (color.equals(Color.GREEN))
+			colorStr = "green";
+		if (color.equals(Color.BLUE))
+			colorStr = "blue";
+		if (color.equals(Color.BLACK))
+			colorStr = "black";
 		return 
-			"<circle color=\"" + "\">"
+			"<circle color=\"" + colorStr + "\">"
 				+ "<point x=\"" + this.cx 
-						+ "\" y=\"" + this.cy + "\" /> + "
+						+ "\" y=\"" + this.cy + "\" />"
 				+ "<radius>" + this.rad + "</radius>"
 			+ "</circle>";
 	}

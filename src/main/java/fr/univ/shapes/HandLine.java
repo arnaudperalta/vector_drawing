@@ -49,12 +49,21 @@ public class HandLine implements ILine {
 
 	@Override
 	public String serialize() {
+		String colorStr = "";
+		if (c.equals(Color.RED))
+			colorStr = "red";
+		if (c.equals(Color.GREEN))
+			colorStr = "green";
+		if (c.equals(Color.BLUE))
+			colorStr = "blue";
+		if (c.equals(Color.BLACK))
+			colorStr = "black";
 		return 
-			"<line color=\"" + "\">"
+			"<line color=\"" + colorStr + "\">"
 				+ "<point x=\"" + this.x0 
-						+ "\" y=\"" + this.y0 + "\" /> + "
+						+ "\" y=\"" + this.y0 + "\" />"
 				+ "<point x=\"" + this.x1 
-						+ "\" y=\"" + this.y1 + "\" /> + "
+						+ "\" y=\"" + this.y1 + "\" />"
 			+ "</line>";
 	}
 

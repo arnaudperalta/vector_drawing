@@ -1,6 +1,10 @@
 package fr.univ.client;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
@@ -302,14 +306,15 @@ public class GraphicEditor extends JPanel {
 		});
 	}
 
-	public void saveDrawing() {
-		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-			+ "<drawing xmlns=\"http://www.univ-rouen.fr/drawing\">";
-		for (Graphics g : shapes) {
-			xml += g.serialize();
+	public void saveDrawing(String filePath) throws IOException {
+		String xml = GraphicSerialization.serialize(shapes);
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+			writer.write(xml);
 		}
-		xml += "</drawing>";
-		System.out.println(xml);
+	}
+
+	public void openDrawing(String filePath) throws IOException {
+		GraphicSerialization.deserialize(filePath);
 	}
 
 	public void newCanvas() {

@@ -50,10 +50,19 @@ public class HandCircle implements ICircle {
 
 	@Override
 	public String serialize() {
+		String colorStr = "";
+		if (c.equals(Color.RED))
+			colorStr = "red";
+		if (c.equals(Color.GREEN))
+			colorStr = "green";
+		if (c.equals(Color.BLUE))
+			colorStr = "blue";
+		if (c.equals(Color.BLACK))
+			colorStr = "black";
 		return
-			"<circle color=\"" + "\">"
+			"<circle color=\"" + colorStr + "\">"
 				+ "<point x=\"" + this.cx
-						+ "\" y=\"" + this.cy + "\" /> + "
+						+ "\" y=\"" + this.cy + "\" />"
 				+ "<radius>" + this.rad + "</radius>"
 			+ "</circle>";
 	}
