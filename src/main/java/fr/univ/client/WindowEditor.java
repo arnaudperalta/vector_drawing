@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class WindowEditor extends JFrame {
 
@@ -65,7 +66,7 @@ public class WindowEditor extends JFrame {
         });
     }
 
-	public void openSaveAs() {
+	public void openSaveAs() throws IOException {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("."));
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -75,7 +76,7 @@ public class WindowEditor extends JFrame {
 		}
 	}
 
-	public void openDrawing() {
+	public void openDrawing() throws IOException {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("."));
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

@@ -2,7 +2,6 @@ package fr.univ.client;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +49,10 @@ public class GraphicSerialization {
 			xr.setContentHandler(handler);
 			xr.setErrorHandler(handler);
 			xr.parse(is);
+			return handler.getResult();
 		} catch (ParserConfigurationException | SAXException e2) {
 			e2.printStackTrace();
 		}
-
 		return null;
 	}
 
@@ -124,18 +123,15 @@ public class GraphicSerialization {
 			}
 		}
 
-		@Override
-		public void endDocument() {
-			for (Graphics g : graphicsList) {
-				System.out.println(g.serialize());
-			}
-		}
-
 		public void resetPoints() {
 			x0 = null;
 			y0 = null;
 			x1 = null;
 			y1 = null;
+		}
+
+		public List<Graphics> getResult() {
+			return this.graphicsList;
 		}
 
 	}
