@@ -64,13 +64,13 @@ public class Rectangle implements IRectangle {
 	@Override
 	public void mirror(double symetryPoint) {
 		if (y0 <= symetryPoint)
-			y0 += symetryPoint;
+			y0 = symetryPoint + Math.abs(symetryPoint - y0);
 		else
-			y0 -= symetryPoint;
+			y0 = symetryPoint - (y0 - symetryPoint);
 		if (y1 <= symetryPoint)
-			y1 += symetryPoint;
+			y1 = symetryPoint + Math.abs(symetryPoint - y1);
 		else
-			y1 -= symetryPoint;
+			y1 = symetryPoint - (y1 - symetryPoint);
 	}
 
 }

@@ -58,11 +58,11 @@ public class HandLine implements ILine {
 			colorStr = "blue";
 		if (c.equals(Color.BLACK))
 			colorStr = "black";
-		return 
+		return
 			"<line color=\"" + colorStr + "\">"
-				+ "<point x=\"" + this.x0 
+				+ "<point x=\"" + this.x0
 						+ "\" y=\"" + this.y0 + "\" />"
-				+ "<point x=\"" + this.x1 
+				+ "<point x=\"" + this.x1
 						+ "\" y=\"" + this.y1 + "\" />"
 			+ "</line>";
 	}
@@ -75,13 +75,13 @@ public class HandLine implements ILine {
 	@Override
 	public void mirror(double symetryPoint) {
 		if (y0 <= symetryPoint)
-			y0 += symetryPoint;
+			y0 = symetryPoint - y0;
 		else
-			y0 -= symetryPoint;
+			y0 = symetryPoint - (y0 - symetryPoint);
 		if (y1 <= symetryPoint)
-			y1 += symetryPoint;
+			y1 = symetryPoint - y1;
 		else
-			y1 -= symetryPoint;
+			y1 = symetryPoint - (y1 - symetryPoint);
 	}
 
 }

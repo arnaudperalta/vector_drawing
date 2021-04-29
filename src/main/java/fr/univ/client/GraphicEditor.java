@@ -33,7 +33,7 @@ public class GraphicEditor extends JPanel {
 	private JButton groupShapeButton;
 	private JButton ungroupShapeButton;
 	private JButton drawModeSwitch;
-
+	private JButton globalMirror;
 
 
 	private GraphicsPanel gp;
@@ -81,6 +81,7 @@ public class GraphicEditor extends JPanel {
 		groupShapeButton = new JButton("Group Shape");
 		ungroupShapeButton = new JButton("Ungroup Shape");
 		drawModeSwitch = new JButton("Dessin standard");
+		globalMirror = new JButton("Global Mirror");
 		gp = new GraphicsPanel(this.shapes);
 		color = new JComboBox<AppColor>(AppColor.values());
 		color.setRenderer(new ColorAppRenderer());
@@ -96,6 +97,7 @@ public class GraphicEditor extends JPanel {
 		test.add(groupShapeButton);
 		test.add(ungroupShapeButton);
 		test.add(drawModeSwitch);
+		test.add(globalMirror);
 		test.add(color);
 		this.setLayout(new BorderLayout());
 		this.add(test, BorderLayout.PAGE_START);
@@ -314,6 +316,14 @@ public class GraphicEditor extends JPanel {
 
 			}
 
+		});
+
+		globalMirror.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MirrorOperation.mirrorDrawing(shapes);
+			}
 		});
 
 	}
