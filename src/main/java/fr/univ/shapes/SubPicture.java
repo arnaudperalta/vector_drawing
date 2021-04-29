@@ -43,4 +43,9 @@ public class SubPicture implements Graphics {
 		return res;
 	}
 
+	@Override
+	public String serialize() {
+		return null;
+	}
+
 }
