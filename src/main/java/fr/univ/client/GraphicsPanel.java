@@ -17,6 +17,8 @@ public class GraphicsPanel extends JPanel {
   @Override
   protected void paintComponent(java.awt.Graphics g) {
 		super.paintComponent(g);
+    g.setColor(Color.WHITE);
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		for (Drawable shape : this.shapes) {
 			shape.draw((Graphics2D) g);
 		}
