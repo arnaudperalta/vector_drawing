@@ -314,7 +314,7 @@ public class GraphicEditor extends JPanel {
 	}
 
 	public void openDrawing(String filePath) throws IOException {
-		GraphicSerialization.deserialize(filePath);
+		System.out.println(GraphicSerialization.deserialize(filePath));
 	}
 
 	public void newCanvas() {
