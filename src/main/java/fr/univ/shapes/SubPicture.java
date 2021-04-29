@@ -58,4 +58,9 @@ public class SubPicture implements Graphics {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public double getArea() {
+		throw new UnsupportedOperationException();
+	}
+
 }

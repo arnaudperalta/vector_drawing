@@ -74,5 +74,10 @@ public class Line implements ILine {
 		else
 			y1 = symetryPoint - (y1 - symetryPoint);
 	}
+
+	@Override
+	public double getArea() {
+		return 0;
+	}
 }
 
