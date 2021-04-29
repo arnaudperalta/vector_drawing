@@ -44,7 +44,7 @@ public class Circle implements ICircle {
 		return 
 			"<circle color=\"" + "\">"
 				+ "<point x=\"" + this.cx 
-						+ "\" y=\"" + this.cy + "\" /> + "
+						+ "\" y=\"" + this.cy + "\" />"
 				+ "<radius>" + this.rad + "</radius>"
 			+ "</circle>";
 	}

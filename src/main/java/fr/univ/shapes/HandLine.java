@@ -52,9 +52,9 @@ public class HandLine implements ILine {
 		return 
 			"<line color=\"" + "\">"
 				+ "<point x=\"" + this.x0 
-						+ "\" y=\"" + this.y0 + "\" /> + "
+						+ "\" y=\"" + this.y0 + "\" />"
 				+ "<point x=\"" + this.x1 
-						+ "\" y=\"" + this.y1 + "\" /> + "
+						+ "\" y=\"" + this.y1 + "\" />"
 			+ "</line>";
 	}
 
