@@ -45,7 +45,17 @@ public class SubPicture implements Graphics {
 
 	@Override
 	public String serialize() {
-		return null;
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public double getMostSouthPoint() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void mirror(double symetryPoint) {
+		throw new UnsupportedOperationException();
 	}
 
 }

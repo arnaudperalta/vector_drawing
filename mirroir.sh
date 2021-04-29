@@ -1,1 +1,1 @@
-java -cp target/classes fr.univ.App mirroir
+java -cp target/classes fr.univ.App mirroir $1 $2
