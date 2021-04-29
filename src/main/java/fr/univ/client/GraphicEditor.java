@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
@@ -32,6 +34,8 @@ public class GraphicEditor extends JPanel {
 	private JButton ungroupShapeButton;
 	private JButton drawModeSwitch;
 
+
+
 	private GraphicsPanel gp;
 
 	private List<Graphics> shapes;
@@ -48,6 +52,8 @@ public class GraphicEditor extends JPanel {
 	private AppMode mode;
 
 	private DrawMode drawMode;
+
+	private JComboBox<AppColor> color;
 
 	public GraphicEditor() {
 		createModel();
@@ -76,6 +82,8 @@ public class GraphicEditor extends JPanel {
 		ungroupShapeButton = new JButton("Ungroup Shape");
 		drawModeSwitch = new JButton("Dessin standard");
 		gp = new GraphicsPanel(this.shapes);
+		color = new JComboBox<AppColor>(AppColor.values());
+		color.setRenderer(new ColorAppRenderer());
 	}
 
 	private void setUpLayout() {
@@ -88,6 +96,7 @@ public class GraphicEditor extends JPanel {
 		test.add(groupShapeButton);
 		test.add(ungroupShapeButton);
 		test.add(drawModeSwitch);
+		test.add(color);
 		this.setLayout(new BorderLayout());
 		this.add(test, BorderLayout.PAGE_START);
 		this.add(gp, BorderLayout.CENTER);
@@ -169,16 +178,18 @@ public class GraphicEditor extends JPanel {
 				switch(mode) {
 					case ADD_SHAPE:
 					if(secondInput) {
+						AppColor ac = (AppColor) color.getSelectedItem();
+						Color selectedColor = ac.getColor();
 						switch(shapeType) {
 							case CIRCLE:
 								double dis=Math.sqrt((e.getX()-x)*(e.getX()-x) + (e.getY()-y)*(e.getY()-y));
-								shapes.add(hsf.createICircle(x, y, dis, Color.RED));
+								shapes.add(hsf.createICircle(x, y, dis, selectedColor));
 								break;
 							case LINE:
-								shapes.add(hsf.createILine(x, y, e.getX(), e.getY(), Color.RED));
+								shapes.add(hsf.createILine(x, y, e.getX(), e.getY(), selectedColor));
 								break;
 							case RECTANGLE:
-								shapes.add(hsf.createIRectangle(x, y, e.getX(), e.getY(), Color.RED));
+								shapes.add(hsf.createIRectangle(x, y, e.getX(), e.getY(), selectedColor));
 								break;
 							default:
 							break;
@@ -304,17 +315,20 @@ public class GraphicEditor extends JPanel {
 			}
 
 		});
+
 	}
 
 	public void saveDrawing(String filePath) throws IOException {
 		String xml = GraphicSerialization.serialize(shapes);
+		System.out.println(filePath);
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
 			writer.write(xml);
 		}
 	}
 
 	public void openDrawing(String filePath) throws IOException {
-		System.out.println(GraphicSerialization.deserialize(filePath));
+		shapes.clear();
+		shapes.addAll(GraphicSerialization.deserialize(filePath));
 	}
 
 	public void newCanvas() {
@@ -347,6 +361,63 @@ public class GraphicEditor extends JPanel {
 	private enum DrawMode {
 		STANDARD,
 		HAND
+	}
+
+	private enum AppColor {
+		RED("Red", Color.RED),
+		GREEN("Green", Color.GREEN),
+		BLUE("Blue", Color.BLUE),
+		BLACK("Black", Color.BLACK);
+
+		private String name;
+		private Color col;
+		private BufferedImage icon;
+
+		private AppColor(String s,Color c) {
+			name = s;
+			col = c;
+			icon = new BufferedImage(15 , 10, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D graphics = icon.createGraphics();
+			graphics.setPaint(c);
+			graphics.fillRect( 0, 0, icon.getWidth(), icon.getHeight() );
+			graphics.setPaint(Color.BLACK);
+			graphics.drawRect( 0, 0, icon.getWidth(), icon.getHeight() );
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public Color getColor() {
+			return col;
+		}
+
+		public BufferedImage getIcon() {
+			return icon;
+		}
+
+		@Override
+		public String toString() {
+			return getName();
+		}
+	}
+	private class ColorAppRenderer implements ListCellRenderer {
+
+		private DefaultListCellRenderer delegate;
+
+		public ColorAppRenderer() {
+			delegate = new DefaultListCellRenderer();
+		}
+
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+				boolean cellHasFocus) {
+			AppColor ac = (AppColor) value;
+			delegate.setIcon(new ImageIcon(ac.getIcon()));
+			delegate.setText(ac.getName());
+			return delegate;
+		}
+
 	}
 
 }
