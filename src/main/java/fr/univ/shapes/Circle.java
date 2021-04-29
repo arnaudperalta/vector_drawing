@@ -48,6 +48,8 @@ public class Circle implements ICircle {
 			colorStr = "green";
 		if (color.equals(Color.BLUE))
 			colorStr = "blue";
+		if (color.equals(Color.BLACK))
+			colorStr = "black";
 		return 
 			"<circle color=\"" + colorStr + "\">"
 				+ "<point x=\"" + this.cx 

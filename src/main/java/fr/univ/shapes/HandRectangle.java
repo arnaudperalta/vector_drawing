@@ -62,6 +62,8 @@ public class HandRectangle implements IRectangle {
 			colorStr = "green";
 		if (c.equals(Color.BLUE))
 			colorStr = "blue";
+		if (c.equals(Color.BLACK))
+			colorStr = "black";
 		return 
 			"<rectangle color=\"" + colorStr + "\">"
 				+ "<point x=\"" + this.x0 

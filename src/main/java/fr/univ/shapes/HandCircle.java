@@ -55,6 +55,8 @@ public class HandCircle implements ICircle {
 			colorStr = "green";
 		if (c.equals(Color.BLUE))
 			colorStr = "blue";
+		if (c.equals(Color.BLACK))
+			colorStr = "black";
 		return 
 			"<circle color=\"" + colorStr + "\">"
 				+ "<point x=\"" + this.cx 

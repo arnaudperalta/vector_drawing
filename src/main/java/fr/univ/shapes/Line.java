@@ -47,6 +47,8 @@ public class Line implements ILine {
 			colorStr = "green";
 		if (c.equals(Color.BLUE))
 			colorStr = "blue";
+		if (c.equals(Color.BLACK))
+			colorStr = "black";
 		return 
 			"<line color=\"" + colorStr + "\">"
 				+ "<point x=\"" + this.x0 
