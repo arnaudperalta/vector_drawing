@@ -2,7 +2,6 @@ package fr.univ.client;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ import fr.univ.shapes.Line;
 public class GraphicSerialization {
 
 	private GraphicSerialization() {}
-	
+
 	public static String serialize(List<Graphics> shapes) {
 		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			+ "<!DOCTYPE drawing SYSTEM \"drawing.dtd\">"
@@ -67,7 +66,7 @@ public class GraphicSerialization {
 		private Double y1;
 		private Double radius;
 		private Color color;
-		
+
 		@Override
 		public void startElement(String uri, String localname, String qName, Attributes atts) {
 			if (qName.equals("circle")
@@ -95,7 +94,7 @@ public class GraphicSerialization {
 			if (qName.equals("radius"))
 				isRadius = true;
 		}
-		
+
 		@Override
 		public void endElement(String uri, String localName, String qName) {
 			if (qName.equals("circle")) {
@@ -116,7 +115,7 @@ public class GraphicSerialization {
 			if (qName.equals("radius"))
 				isRadius = false;
 		}
-		
+
 		@Override
 		public void characters(char[] ch, int start, int length) {
 			if (isRadius) {

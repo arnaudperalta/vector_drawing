@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class WindowEditor extends JFrame {
 
@@ -41,11 +42,23 @@ public class WindowEditor extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-				openSaveAs();
+				try {
+                    openSaveAs();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
 
         });
-		itemOpen.addActionListener(actionListener -> openDrawing());
+		itemOpen.addActionListener(actionListener -> {
+            try {
+                openDrawing();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
         this.pack();
         setSize(width,height);
         setResizable(false);
@@ -57,21 +70,21 @@ public class WindowEditor extends JFrame {
         });
     }
 
-	public void openSaveAs() {
+	public void openSaveAs() throws IOException {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("."));
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
+		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 			System.out.println(chooser.getCurrentDirectory());
 			graphicEditor.saveDrawing(chooser.getCurrentDirectory().getAbsolutePath());
 		}
 	}
 
-	public void openDrawing() {
+	public void openDrawing() throws IOException {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("."));
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
+		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 			System.out.println(chooser.getSelectedFile().getAbsolutePath());
 			graphicEditor.openDrawing(chooser.getSelectedFile().getAbsolutePath());
 		}
