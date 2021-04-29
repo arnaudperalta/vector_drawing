@@ -50,10 +50,11 @@ public class WindowEditor extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                graphicEditor.saveDrawing();
+				openSaveAs();
             }
 
         });
+		itemOpen.addActionListener(actionListener -> openDrawing());
         this.pack();
         setSize(width,height);
         setVisible(true);
@@ -63,4 +64,24 @@ public class WindowEditor extends JFrame {
             }
         });
     }
+
+	public void openSaveAs() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new java.io.File("."));
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
+			System.out.println(chooser.getCurrentDirectory());
+			graphicEditor.saveDrawing(chooser.getCurrentDirectory().getAbsolutePath());
+		}
+	}
+
+	public void openDrawing() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new java.io.File("."));
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
+			System.out.println(chooser.getSelectedFile().getAbsolutePath());
+			graphicEditor.openDrawing(chooser.getSelectedFile().getAbsolutePath());
+		}
+	}
 }
