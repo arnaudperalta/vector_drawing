@@ -148,8 +148,12 @@ public class GraphicSerialization {
 			}
 			if (qName.equals("radius"))
 				isRadius = false;
-			if (qName.equals("subpicture"))
-				graphicsList.add(subPicStack.pop());
+			if (qName.equals("subpicture")) {
+				Graphics lastSub = subPicStack.pop();
+				if (!subPicStack.isEmpty())
+					subPicStack.getLast().addGraphic(lastSub);
+				graphicsList.add(lastSub);
+			}
 		}
 
 		@Override
