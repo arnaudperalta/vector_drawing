@@ -70,7 +70,7 @@ public class HandRectangle implements IRectangle {
 						+ "\" y=\"" + this.y0 + "\" />"
 				+ "<point x=\"" + this.x1
 						+ "\" y=\"" + this.y1 + "\" />"
-			+ "</rextangle>";
+			+ "</rectangle>";
 	}
 
 	@Override
