@@ -6,10 +6,11 @@ import java.util.List;
 import fr.univ.shapes.Graphics;
 
 public class AreaOperation {
-	
+
 	private AreaOperation() {}
 
 	public static void getAreasOfDrawingFromFile(String srcPath) throws IOException {
+		System.out.println(srcPath);
 		List<Graphics> shapes = GraphicSerialization.deserialize(srcPath);
 		System.out.println(getAreasOfDrawing(shapes));
 	}

@@ -33,6 +33,7 @@ public class GraphicEditor extends JPanel {
 	private JButton groupShapeButton;
 	private JButton ungroupShapeButton;
 	private JButton drawModeSwitch;
+	private JButton simpleMirror;
 	private JButton globalMirror;
 
 
@@ -81,6 +82,7 @@ public class GraphicEditor extends JPanel {
 		groupShapeButton = new JButton("Group Shape");
 		ungroupShapeButton = new JButton("Ungroup Shape");
 		drawModeSwitch = new JButton("Dessin standard");
+		simpleMirror = new JButton("Simple Mirror");
 		globalMirror = new JButton("Global Mirror");
 		gp = new GraphicsPanel(this.shapes);
 		color = new JComboBox<AppColor>(AppColor.values());
@@ -97,6 +99,7 @@ public class GraphicEditor extends JPanel {
 		test.add(groupShapeButton);
 		test.add(ungroupShapeButton);
 		test.add(drawModeSwitch);
+		test.add(simpleMirror);
 		test.add(globalMirror);
 		test.add(color);
 		this.setLayout(new BorderLayout());
@@ -170,6 +173,15 @@ public class GraphicEditor extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mode = AppMode.UNGROUP_SHAPE;
+				secondInput = false;
+			}
+
+		});
+		simpleMirror.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mode = AppMode.MIRROR_SHAPE;
 				secondInput = false;
 			}
 
@@ -288,10 +300,11 @@ public class GraphicEditor extends JPanel {
 						double[] mid = shape.getMiddle();
 						double dis =Math.sqrt((e.getX()-mid[0])*(e.getX()-mid[0]) + (e.getY()-mid[1])*(e.getY()-mid[1]));
 						if(dis < minDis ) {
-							resSp = shape;
+							resShape = shape;
 							minDis = dis;
 						}
 					}
+					resShape.mirror(resShape.getMostSouthPoint());
 					break;
 				}
 			}
