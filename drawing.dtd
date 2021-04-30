@@ -5,6 +5,8 @@
 <!ENTITY % color "(black|red|green|blue)">
 <!ENTITY % type "(std|hand)">
 
+<!ELEMENT subpicture (circle, line, rectangle)>
+
 <!ELEMENT circle (point,radius)>
 	<!ATTLIST circle color %color; #REQUIRED>
 	<!ATTLIST circle type %type; #REQUIRED >
