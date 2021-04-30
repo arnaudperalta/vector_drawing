@@ -7,15 +7,17 @@
    <radius>200</radius>
 </circle>
 
-<line color="red" type="std">
-   <point x="400" y="90" />
-   <point x="600" y="500" />
-</line>
+<subpicture>
+	<line color="red" type="std">
+		<point x="400" y="90" />
+		<point x="600" y="500" />
+	</line>
 
-<line color="red" type="std">
-   <point x="400" y="90" />
-   <point x="200" y="500" />
-</line>
+	<line color="red" type="std">
+		<point x="400" y="90" />
+		<point x="200" y="500" />
+	</line>
+</subpicture>
 
 <line color="red" type="std">
    <point x="200" y="400" />

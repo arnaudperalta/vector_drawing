@@ -45,7 +45,12 @@ public class SubPicture implements Graphics {
 
 	@Override
 	public String serialize() {
-		throw new UnsupportedOperationException();
+		String xml = "<subpicture>";
+		for (Graphics g : subPics) {
+			xml += g.serialize();
+		}
+		xml += "</subpicture>";
+		return xml;
 	}
 
 	@Override

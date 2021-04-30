@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.awt.*;
 
@@ -19,6 +21,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import fr.univ.shapes.Circle;
 import fr.univ.shapes.Rectangle;
+import fr.univ.shapes.SubPicture;
 import fr.univ.shapes.Graphics;
 import fr.univ.shapes.HandCircle;
 import fr.univ.shapes.HandLine;
@@ -69,6 +72,7 @@ public class GraphicSerialization {
 		private Double y1;
 		private Double radius;
 		private Color color;
+		private Deque<SubPicture> subPicStack = new LinkedList<>();
 
 		@Override
 		public void startElement(String uri, String localname, String qName, Attributes atts) {
@@ -100,6 +104,8 @@ public class GraphicSerialization {
 			}
 			if (qName.equals("radius"))
 				isRadius = true;
+			if (qName.equals("subpicture"))
+				subPicStack.push(new SubPicture());
 		}
 
 		@Override
@@ -110,7 +116,10 @@ public class GraphicSerialization {
 					g = new HandCircle(x0, y0, radius, color);
 				else
 					g = new Circle(x0, y0, radius, color);
-				graphicsList.add(g);
+				if (!subPicStack.isEmpty())
+					subPicStack.getLast().addGraphic(g);
+				else 
+					graphicsList.add(g);
 				resetPoints();
 			}
 			if (qName.equals("rectangle")) {
@@ -119,7 +128,10 @@ public class GraphicSerialization {
 					g = new HandRectangle(x0, y0, x1, y1, color);
 				else
 					g = new Rectangle(x0, y0, x1, y1, color);
-				graphicsList.add(g);
+				if (!subPicStack.isEmpty())
+					subPicStack.getLast().addGraphic(g);
+				else 
+					graphicsList.add(g);
 				resetPoints();
 			}
 			if (qName.equals("line")) {
@@ -128,11 +140,16 @@ public class GraphicSerialization {
 					g = new HandLine(x0, y0, x1, y1, color);
 				else
 					g = new Line(x0, y0, x1, y1, color);
-				graphicsList.add(g);
+				if (!subPicStack.isEmpty())
+					subPicStack.getLast().addGraphic(g);
+				else 
+					graphicsList.add(g);
 				resetPoints();
 			}
 			if (qName.equals("radius"))
 				isRadius = false;
+			if (qName.equals("subpicture"))
+				graphicsList.add(subPicStack.pop());
 		}
 
 		@Override
