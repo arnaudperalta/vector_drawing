@@ -55,12 +55,18 @@ public class SubPicture implements Graphics {
 
 	@Override
 	public double getMostSouthPoint() {
-		throw new UnsupportedOperationException();
+		double max = 0.0;
+		for (Graphics g : subPics) {
+			max = Math.max(max,g.getMostSouthPoint());
+		}
+		return max;
 	}
 
 	@Override
 	public void mirror(double symetryPoint) {
-		throw new UnsupportedOperationException();
+		for (Graphics g : subPics) {
+			g.mirror(symetryPoint);
+		}
 	}
 
 	@Override
