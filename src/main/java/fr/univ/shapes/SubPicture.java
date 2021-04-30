@@ -71,7 +71,11 @@ public class SubPicture implements Graphics {
 
 	@Override
 	public double getArea() {
-		throw new UnsupportedOperationException();
+		double area = 0;
+		for (Graphics g : subPics) {
+			area += g.getArea();
+		}
+		return area;
 	}
 
 }

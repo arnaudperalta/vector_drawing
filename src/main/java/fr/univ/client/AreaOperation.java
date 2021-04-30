@@ -10,9 +10,7 @@ public class AreaOperation {
 	private AreaOperation() {}
 
 	public static void getAreasOfDrawingFromFile(String srcPath) throws IOException {
-		System.out.println(srcPath);
 		List<Graphics> shapes = GraphicSerialization.deserialize(srcPath);
-		System.out.println(getAreasOfDrawing(shapes));
 	}
 
 	public static double getAreasOfDrawing(List<Graphics> shapes) {
