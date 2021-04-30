@@ -71,6 +71,9 @@ public class Rectangle implements IRectangle {
 			y1 = symetryPoint + Math.abs(symetryPoint - y1);
 		else
 			y1 = symetryPoint - (y1 - symetryPoint);
+		double temp = y1;
+		y1 = y0;
+		y0 = temp;
 	}
 
 	@Override

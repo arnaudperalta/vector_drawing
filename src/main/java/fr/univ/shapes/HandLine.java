@@ -54,6 +54,8 @@ public class HandLine implements ILine {
 		this.x1 += dx;
 		this.y0 += dy;
 		this.y1 += dy;
+		this.ctrlx +=dx;
+		this.ctrly += dy;
 	}
 
 	@Override

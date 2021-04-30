@@ -60,6 +60,10 @@ public class HandRectangle implements IRectangle {
 		this.x1 += dx;
 		this.y0 += dy;
 		this.y1 += dy;
+		l1.move(dx,dy);
+		l2.move(dx,dy);
+		l3.move(dx,dy);
+		l4.move(dx,dy);
 	}
 
 	@Override
