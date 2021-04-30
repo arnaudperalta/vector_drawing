@@ -60,7 +60,7 @@ public class HandCircle implements ICircle {
 		if (c.equals(Color.BLACK))
 			colorStr = "black";
 		return
-			"<circle color=\"" + colorStr + "\">"
+			"<circle color=\"" + colorStr + "\" type=\"hand\">"
 				+ "<point x=\"" + this.cx
 						+ "\" y=\"" + this.cy + "\" />"
 				+ "<radius>" + this.rad + "</radius>"

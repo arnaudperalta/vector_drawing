@@ -20,6 +20,9 @@ import org.xml.sax.helpers.DefaultHandler;
 import fr.univ.shapes.Circle;
 import fr.univ.shapes.Rectangle;
 import fr.univ.shapes.Graphics;
+import fr.univ.shapes.HandCircle;
+import fr.univ.shapes.HandLine;
+import fr.univ.shapes.HandRectangle;
 import fr.univ.shapes.Line;
 
 public class GraphicSerialization {
@@ -59,7 +62,7 @@ public class GraphicSerialization {
 	private static class HandlerImpl extends DefaultHandler {
 
 		private List<Graphics> graphicsList = new ArrayList<>();
-		private boolean isRadius;
+		private boolean isRadius, isHandMade;
 		private Double x0;
 		private Double y0;
 		private Double x1;
@@ -80,6 +83,10 @@ public class GraphicSerialization {
 					color = Color.GREEN;
 				if (atts.getValue("color").equals("black"))
 					color = Color.BLACK;
+				if (atts.getValue("type").equals("hand"))
+					isHandMade = true;
+				if (atts.getValue("type").equals("std"))
+					isHandMade = false;
 			}
 			if (qName.equals("point")) {
 				// Si le premier point est null
@@ -98,17 +105,29 @@ public class GraphicSerialization {
 		@Override
 		public void endElement(String uri, String localName, String qName) {
 			if (qName.equals("circle")) {
-				Graphics g = new Circle(x0, y0, radius, color);
+				Graphics g;
+				if (isHandMade)
+					g = new HandCircle(x0, y0, radius, color);
+				else
+					g = new Circle(x0, y0, radius, color);
 				graphicsList.add(g);
 				resetPoints();
 			}
 			if (qName.equals("rectangle")) {
-				Graphics g = new Rectangle(x0, y0, x1, y1, color);
+				Graphics g;
+				if (isHandMade)
+					g = new HandRectangle(x0, y0, x1, y1, color);
+				else
+					g = new Rectangle(x0, y0, x1, y1, color);
 				graphicsList.add(g);
 				resetPoints();
 			}
 			if (qName.equals("line")) {
-				Graphics g = new Line(x0, y0, x1, y1, color);
+				Graphics g;
+				if (isHandMade)
+					g = new HandLine(x0, y0, x1, y1, color);
+				else
+					g = new Line(x0, y0, x1, y1, color);
 				graphicsList.add(g);
 				resetPoints();
 			}

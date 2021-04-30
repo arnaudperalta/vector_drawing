@@ -50,7 +50,7 @@ public class Line implements ILine {
 		if (c.equals(Color.BLACK))
 			colorStr = "black";
 		return
-			"<line color=\"" + colorStr + "\">"
+			"<line color=\"" + colorStr + "\" type=\"std\">"
 				+ "<point x=\"" + this.x0
 						+ "\" y=\"" + this.y0 + "\" />"
 				+ "<point x=\"" + this.x1
