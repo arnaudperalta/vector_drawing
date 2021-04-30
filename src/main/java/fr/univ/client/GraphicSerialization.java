@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 import java.awt.*;
 
@@ -20,14 +19,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import fr.univ.shapes.Circle;
-import fr.univ.shapes.Rectangle;
+import fr.univ.builder.SketchBuilder;
+import fr.univ.builder.SketchBuilderHand;
+import fr.univ.builder.SketchBuilderStd;
 import fr.univ.shapes.SubPicture;
 import fr.univ.shapes.Graphics;
-import fr.univ.shapes.HandCircle;
-import fr.univ.shapes.HandLine;
-import fr.univ.shapes.HandRectangle;
-import fr.univ.shapes.Line;
 
 public class GraphicSerialization {
 
@@ -65,43 +61,36 @@ public class GraphicSerialization {
 
 	private static class HandlerImpl extends DefaultHandler {
 
+		private SketchBuilderHand sbh = new SketchBuilderHand();
+		private SketchBuilderStd sbs = new SketchBuilderStd();
+		private SketchBuilder actualBuilder;
 		private List<Graphics> graphicsList = new ArrayList<>();
-		private boolean isRadius, isHandMade;
-		private Double x0;
-		private Double y0;
-		private Double x1;
-		private Double y1;
-		private Double radius;
-		private Color color;
 		private Deque<SubPicture> subPicStack = new ArrayDeque<>();
+		private boolean isRadius;
 
 		@Override
 		public void startElement(String uri, String localname, String qName, Attributes atts) {
-			if (qName.equals("circle")
-					|| qName.equals("rectangle")
-					|| qName.equals("line")) {
-				if (atts.getValue("color").equals("blue"))
-					color = Color.BLUE;
-				if (atts.getValue("color").equals("red"))
-					color = Color.RED;
-				if (atts.getValue("color").equals("green"))
-					color = Color.GREEN;
-				if (atts.getValue("color").equals("black"))
-					color = Color.BLACK;
-				if (atts.getValue("type").equals("hand"))
-					isHandMade = true;
-				if (atts.getValue("type").equals("std"))
-					isHandMade = false;
-			}
+			if (atts.getValue("type") != null && atts.getValue("type").equals("std"))
+				actualBuilder = sbs;
+			if (atts.getValue("type") != null && atts.getValue("type").equals("hand"))
+				actualBuilder = sbh;
+			if (qName.equals("circle"))
+				actualBuilder.startCircle();
+			if (qName.equals("rectangle"))
+				actualBuilder.startRectangle();
+			if (qName.equals("line"))
+				actualBuilder.startLine();
+			if (atts.getValue("color") != null && atts.getValue("color").equals("blue"))
+				actualBuilder.addColor(Color.BLUE);
+			if (atts.getValue("color") != null && atts.getValue("color").equals("red"))
+				actualBuilder.addColor(Color.RED);
+			if (atts.getValue("color") != null && atts.getValue("color").equals("green"))
+				actualBuilder.addColor(Color.GREEN);
+			if (atts.getValue("color") != null && atts.getValue("color").equals("black"))
+				actualBuilder.addColor(Color.BLACK);
 			if (qName.equals("point")) {
-				// Si le premier point est null
-				if (x0 == null) {
-					this.x0 = Double.parseDouble(atts.getValue("x"));
-					this.y0 = Double.parseDouble(atts.getValue("y"));
-				} else {
-					this.x1 = Double.parseDouble(atts.getValue("x"));
-					this.y1 = Double.parseDouble(atts.getValue("y"));
-				}
+				double[] point = { Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")) };
+				actualBuilder.addPoint(point);
 			}
 			if (qName.equals("radius"))
 				isRadius = true;
@@ -112,40 +101,25 @@ public class GraphicSerialization {
 		@Override
 		public void endElement(String uri, String localName, String qName) {
 			if (qName.equals("circle")) {
-				Graphics g;
-				if (isHandMade)
-					g = new HandCircle(x0, y0, radius, color);
-				else
-					g = new Circle(x0, y0, radius, color);
+				Graphics g = actualBuilder.endCircle();
 				if (!subPicStack.isEmpty())
 					subPicStack.getFirst().addGraphic(g);
 				else 
 					graphicsList.add(g);
-				resetPoints();
 			}
 			if (qName.equals("rectangle")) {
-				Graphics g;
-				if (isHandMade)
-					g = new HandRectangle(x0, y0, x1, y1, color);
-				else
-					g = new Rectangle(x0, y0, x1, y1, color);
+				Graphics g = actualBuilder.endRectangle();
 				if (!subPicStack.isEmpty())
 					subPicStack.getFirst().addGraphic(g);
 				else 
 					graphicsList.add(g);
-				resetPoints();
 			}
 			if (qName.equals("line")) {
-				Graphics g;
-				if (isHandMade)
-					g = new HandLine(x0, y0, x1, y1, color);
-				else
-					g = new Line(x0, y0, x1, y1, color);
+				Graphics g = actualBuilder.endLine();
 				if (!subPicStack.isEmpty())
 					subPicStack.getFirst().addGraphic(g);
 				else 
 					graphicsList.add(g);
-				resetPoints();
 			}
 			if (qName.equals("radius"))
 				isRadius = false;
@@ -160,16 +134,8 @@ public class GraphicSerialization {
 
 		@Override
 		public void characters(char[] ch, int start, int length) {
-			if (isRadius) {
-				radius = Double.parseDouble(new String(ch, start, length));
-			}
-		}
-
-		public void resetPoints() {
-			x0 = null;
-			y0 = null;
-			x1 = null;
-			y1 = null;
+			if (isRadius)
+				actualBuilder.addRadius(Double.parseDouble(new String(ch, start, length)));
 		}
 
 		public List<Graphics> getResult() {

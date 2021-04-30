@@ -11,6 +11,7 @@ public class AreaOperation {
 
 	public static void getAreasOfDrawingFromFile(String srcPath) throws IOException {
 		List<Graphics> shapes = GraphicSerialization.deserialize(srcPath);
+		System.out.println(getAreasOfDrawing(shapes));
 	}
 
 	public static double getAreasOfDrawing(List<Graphics> shapes) {
