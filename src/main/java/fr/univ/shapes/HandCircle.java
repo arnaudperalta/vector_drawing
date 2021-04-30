@@ -42,6 +42,10 @@ public class HandCircle implements ICircle {
 		return res;
 	}
 
+	public Color getColor() {
+		return c;
+	}
+
 	@Override
 	public void move(int dx, int dy) {
 		this.cx += dx;

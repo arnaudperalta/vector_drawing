@@ -45,6 +45,15 @@ public class HandRectangle implements IRectangle {
 		return res;
 	}
 
+	public double[] getPoints() {
+		double[] res = { x0, y0, x1, y1 };
+		return res;
+	}
+
+	public Color getColor() {
+		return c;
+	}
+
 	@Override
 	public void move(int dx, int dy) {
 		this.x0 += dx;

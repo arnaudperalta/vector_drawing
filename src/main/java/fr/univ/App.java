@@ -3,6 +3,7 @@ package fr.univ;
 import fr.univ.client.AreaOperation;
 import fr.univ.client.GraphicEditor;
 import fr.univ.client.MirrorOperation;
+import fr.univ.client.StandardizationOperation;
 import fr.univ.client.WindowEditor;
 
 public class App
@@ -16,7 +17,9 @@ public class App
 			MirrorOperation.mirrorDrawingFromFile(args[1], args[2]);
 		}
 		else if (args[0].equals("standard")) {
-			System.out.println("standard");
+			if (args.length < 3)
+				throw new Exception("Missing arguments");
+			StandardizationOperation.standardizeDrawingFromFile(args[1], args[2]);
 		}
 		else if (args[0].equals("surface")) {
 			if (args.length < 2)
