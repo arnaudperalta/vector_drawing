@@ -354,11 +354,11 @@ public class GraphicEditor extends JPanel {
 	}
 
 	public void newCanvas() {
-		String choice = JOptionPane.showInputDialog(
+		String choice = (String) JOptionPane.showInputDialog(
 				this,
-				"Taille du canvas",
+				"Taille du canvas ",
 				"Nouveau fichier",
-				JOptionPane.QUESTION_MESSAGE);
+				JOptionPane.QUESTION_MESSAGE, null, null, "1000x500");
 		shapes.clear();
 		if(choice.equals(""))
 			choice = "1000x500";
