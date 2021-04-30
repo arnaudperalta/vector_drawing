@@ -51,7 +51,7 @@ public class Circle implements ICircle {
 		if (color.equals(Color.BLACK))
 			colorStr = "black";
 		return 
-			"<circle color=\"" + colorStr + "\">"
+			"<circle color=\"" + colorStr + "\" type=\"std\">"
 				+ "<point x=\"" + this.cx 
 						+ "\" y=\"" + this.cy + "\" />"
 				+ "<radius>" + this.rad + "</radius>"

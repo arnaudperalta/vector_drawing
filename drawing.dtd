@@ -3,15 +3,19 @@
 <!ATTLIST drawing xmlns CDATA #FIXED "http://www.univ-rouen.fr/drawing">
 
 <!ENTITY % color "(black|red|green|blue)">
+<!ENTITY % type "(std|hand)">
 
 <!ELEMENT circle (point,radius)>
 	<!ATTLIST circle color %color; #REQUIRED>
+	<!ATTLIST circle type %type; #REQUIRED >
 
 <!ELEMENT line (point,point)>
 	<!ATTLIST line color %color; #REQUIRED>
+	<!ATTLIST line type %type; #REQUIRED >
 
 <!ELEMENT rectangle (point,point)>
 	<!ATTLIST rectangle color %color; #REQUIRED>
+	<!ATTLIST rectangle type %type; #REQUIRED >
 
 <!ELEMENT point EMPTY>
 	<!ATTLIST point x CDATA #REQUIRED>
