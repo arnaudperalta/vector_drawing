@@ -360,6 +360,8 @@ public class GraphicEditor extends JPanel {
 				"Nouveau fichier",
 				JOptionPane.QUESTION_MESSAGE);
 		shapes.clear();
+		if(choice.equals(""))
+			choice = "1000x500";
 		String[] size = choice.split("x");
 		gp.setSize(new Dimension(Integer.parseInt(size[0]),Integer.parseInt(size[1])));
 	}
