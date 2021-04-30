@@ -343,7 +343,6 @@ public class GraphicEditor extends JPanel {
 
 	public void saveDrawing(String filePath) throws IOException {
 		String xml = GraphicSerialization.serialize(shapes);
-		System.out.println(filePath);
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
 			writer.write(xml);
 		}

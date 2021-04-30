@@ -97,7 +97,6 @@ public class WindowEditor extends JFrame {
 		chooser.setCurrentDirectory(new java.io.File("."));
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-			System.out.println(chooser.getSelectedFile().getAbsolutePath());
 			graphicEditor.openDrawing(chooser.getSelectedFile().getAbsolutePath());
 		}
         path = chooser.getSelectedFile().getAbsolutePath();
