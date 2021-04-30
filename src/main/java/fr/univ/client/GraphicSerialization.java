@@ -118,7 +118,7 @@ public class GraphicSerialization {
 				else
 					g = new Circle(x0, y0, radius, color);
 				if (!subPicStack.isEmpty())
-					subPicStack.getLast().addGraphic(g);
+					subPicStack.getFirst().addGraphic(g);
 				else 
 					graphicsList.add(g);
 				resetPoints();
@@ -130,7 +130,7 @@ public class GraphicSerialization {
 				else
 					g = new Rectangle(x0, y0, x1, y1, color);
 				if (!subPicStack.isEmpty())
-					subPicStack.getLast().addGraphic(g);
+					subPicStack.getFirst().addGraphic(g);
 				else 
 					graphicsList.add(g);
 				resetPoints();
@@ -142,7 +142,7 @@ public class GraphicSerialization {
 				else
 					g = new Line(x0, y0, x1, y1, color);
 				if (!subPicStack.isEmpty())
-					subPicStack.getLast().addGraphic(g);
+					subPicStack.getFirst().addGraphic(g);
 				else 
 					graphicsList.add(g);
 				resetPoints();
@@ -150,7 +150,7 @@ public class GraphicSerialization {
 			if (qName.equals("radius"))
 				isRadius = false;
 			if (qName.equals("subpicture")) {
-				Graphics lastSub = subPicStack.pop();
+				SubPicture lastSub = subPicStack.pop();
 				if (!subPicStack.isEmpty())
 					subPicStack.getFirst().addGraphic(lastSub);
 				else
