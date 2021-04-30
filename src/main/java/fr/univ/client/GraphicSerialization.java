@@ -3,6 +3,7 @@ package fr.univ.client;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -72,7 +73,7 @@ public class GraphicSerialization {
 		private Double y1;
 		private Double radius;
 		private Color color;
-		private Deque<SubPicture> subPicStack = new LinkedList<>();
+		private Deque<SubPicture> subPicStack = new ArrayDeque<>();
 
 		@Override
 		public void startElement(String uri, String localname, String qName, Attributes atts) {
@@ -151,8 +152,9 @@ public class GraphicSerialization {
 			if (qName.equals("subpicture")) {
 				Graphics lastSub = subPicStack.pop();
 				if (!subPicStack.isEmpty())
-					subPicStack.getLast().addGraphic(lastSub);
-				graphicsList.add(lastSub);
+					subPicStack.getFirst().addGraphic(lastSub);
+				else
+					graphicsList.add(lastSub);
 			}
 		}
 
